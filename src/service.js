@@ -4,6 +4,7 @@ const RateLimit = require("express-rate-limit");
 const config = require("config");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const authRoutes = require('./routes/authRoutes');
 
 // load configurations
 const port = config.get("app.port");
@@ -36,9 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Calling service routes
-app.get('/', (req, res) => {
-    res.send('welcome, this is our api gateway');
-})
+app.use(prefix, authRoutes);
 
 // Running server
 app.listen(port, () => console.log(`Server is running on port ${port}`));
